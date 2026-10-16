@@ -5,9 +5,10 @@ import { motion } from "motion/react";
 import { site } from "@/data/content";
 
 const LINKS = [
+  ["about", "About"],
   ["work", "Work", true],
+  ["experience", "Experience"],
   ["process", "Process"],
-  ["beyond", "Beyond"],
   ["connect", "Connect"],
 ];
 
@@ -37,10 +38,10 @@ export default function Nav() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="bar">
-          <a className="mark" href="#top">TP<span>.</span></a>
+          <a className="mark" href="/#top">TP<span>.</span></a>
           <div className="links">
             {LINKS.map(([id, label, keep]) => (
-              <a key={id} href={`#${id}`} className={`${keep ? "keep " : ""}${active === id ? "on" : ""}`}>
+              <a key={id} href={`/#${id}`} className={`${keep ? "keep " : ""}${active === id ? "on" : ""}`}>
                 {active === id && <motion.span layoutId="navpill" className="navpill" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
                 {label}
               </a>

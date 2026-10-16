@@ -14,7 +14,7 @@ export default function Connect() {
   // Load Cal.com's popup only if you've set calLink in data/content.js.
   useEffect(() => {
     if (!site.calLink) return;
-    getCalApi().then((cal) => cal("ui", { theme: "light", styles: { branding: { brandColor: "#0B7350" } } }));
+    getCalApi().then((cal) => cal("ui", { theme: "light", styles: { branding: { brandColor: "#2F6BFF" } } }));
   }, []);
 
   const copy = () => {
@@ -43,10 +43,10 @@ export default function Connect() {
               <button className="btn cal" type="button" data-cal-link={site.calLink} data-cal-config='{"layout":"month_view"}'>Book a 30-min call</button>
             )}
             <a className="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
-            <button className="btn" type="button" onClick={open}>Ask my AI twin</button>
+            <button className="btn" type="button" onClick={open}>Ask my AI mate</button>
           </div>
         </Reveal>
-        <footer><span>© 2026 {site.name} · Dublin</span><span>Designed by me. Built with AI. Checked by hand.</span></footer>
+        <footer><span>© 2026 {site.name} · Dublin</span><span>Designed by me, built with my AI mate.</span></footer>
       </div>
     </section>
   );
