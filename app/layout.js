@@ -9,6 +9,10 @@ import "@fontsource/jetbrains-mono/800.css";
 import "@fontsource-variable/inter/wght.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
+import "@fontsource-variable/google-sans-flex/wght.css";
+import "@fontsource-variable/google-sans-code/wght.css";
+import "@fontsource-variable/google-sans-code/wght-italic.css";
+import DotField from "@/components/DotField";
 import SmoothScroll from "@/components/SmoothScroll";
 import { TwinProvider } from "@/components/Twin";
 import "./globals.css";
@@ -23,6 +27,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <SmoothScroll>
+          <DotField />
           <TwinProvider>{children}</TwinProvider>
         </SmoothScroll>
       </body>

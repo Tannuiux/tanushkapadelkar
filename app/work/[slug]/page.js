@@ -4,8 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
-import Demo from "@/components/Demos";
+import Demo, { Phone } from "@/components/Demos";
 import Connect from "@/components/Connect";
+import Lightbox from "@/components/Lightbox";
 import { cases } from "@/data/content";
 import { studies } from "@/data/studies";
 
@@ -91,6 +92,17 @@ function Block({ b, id }) {
           ))}
         </div>
       );
+    case "proto": return (
+      <Reveal className="cs2-proto">
+        <div className="cs2-proto-txt">
+          <p className="cs2-eyebrow">Live prototype</p>
+          <h3>{b.title}</h3>
+          <p>{b.text}</p>
+          <span className="cs2-proto-hint">Scroll and tap inside the phone →</span>
+        </div>
+        <Phone src={b.src} alt={b.title} theme={b.theme || "dark"} flat />
+      </Reveal>
+    );
     case "demo": return <Reveal className="cs2-demo"><p className="cs2-eyebrow">{b.label}</p><Demo id={id} /></Reveal>;
     default: return null;
   }
@@ -116,6 +128,7 @@ export default async function CaseStudy({ params }) {
   return (
     <>
       <Nav />
+      <Lightbox />
       <main className={`cs2 theme-${s.theme}`}>
         <header className="cs2-hero">
           <div className="cs2-col">

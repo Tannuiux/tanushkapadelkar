@@ -153,8 +153,8 @@ export const cases = [
   {
     id: "mind",
     logo: ["MIND", "·", "CHECK"],
-    title: "Wellbeing check-ins for a Dublin football club",
-    chips: ["Research", "UCD"],
+    title: "A wellbeing check-in app for men at Football Cooperative",
+    chips: ["Men's mental health", "Football Cooperative", "Research"],
     problem: "How do you check in on players' wellbeing without another long survey?",
     noticed: "Focus groups and thematic analysis surfaced four themes: stress relief, connection, habit and identity.",
     built: "Quick in-the-moment check-ins instead of long surveys, prototyped and usability tested with UCD and Football Cooperative.",
@@ -193,10 +193,13 @@ export const PRESETS = [
 
 // ---------- v7: from your Figma sketch ----------
 export const about = {
-  quote: "AI won't replace you. People who know how to build with AI will.",
+  quote: "AI won't replace you, but people who know how to build with it will.",
+  quoteBy: "IxDF",
+  // <b> words are highlighted on the page.
   paras: [
-    "Yes, there's AI in here. That's how good products get made today, so I'd rather be honest about it: you'll see where AI helped me move faster, and where I made the design call myself.",
-    "I have two sides: a computer engineer and a product designer. Design gets attention, development brings it to life. I use both to make products that look good and feel fast, clear and easy to come back to.",
+    "Yes, I use AI. Most teams do now, so I'd rather be open about it. It takes the busywork: sorting notes, drafting options, catching edge cases. <b>The research, the decisions and the details are mine.</b>",
+    "I don't just make screens. I design experiences people enjoy using, from the first impression to the smallest interaction, and I care about the details that make a product <b>feel smooth, memorable and worth coming back to.</b>",
+    "I'm two people in one: a <b>computer engineer</b> and a <b>product designer</b>. Design gets attention. Engineering brings it to life. Together they let me build products that look good and feel fast, clear and easy to use.",
   ],
   floaters: ["Figma", "Claude", "Notion", "FigJam", "Framer", "Lovable"],
 };
@@ -229,3 +232,72 @@ export const processTools = {
 
 // Full case studies live in data/studies.js (same layout and theme as your Framer pages).
 export { studies } from "./studies";
+
+// Extra lines for the work cards (from your Figma design).
+export const cardExtra = {
+  ebot: {
+    title: "An AI chatbot that knows when to step aside",
+    desc: "Working adults studying after 9pm waited until morning for answers. E-Bot answers first and hands the whole chat to a tutor when it is unsure, with dashboards so tutors know where to start.",
+    ai: "Answers in seconds from the learner's course and module.",
+    mine: "Hand over to a tutor instead of guessing. Trust beat automation.",
+    cta: "View case study",
+  },
+  snap: {
+    desc: "The feature that makes it different: every item remembers when and where you bought it, so you check before you rebuy.",
+    cta: "Read the case study",
+  },
+  stream: {
+    desc: "Admins juggled outside hosting, scattered files and clumsy access. I designed one in-house library with access control and an engagement dashboard.",
+    cta: "Read the case study",
+  },
+  mind: {
+    desc: "Football Cooperative is a Dublin club that uses football to support men's mental health. Players remembered games, not feelings, so I designed a ten-second check-in right after the game that gives the club a signal it can trust.",
+    cta: "Read the case study",
+  },
+};
+
+export const workIntro = {
+  eyebrow: "Shipped work",
+  title: ["Products where AI and", "people", "work together."],
+  sub: "Each one shows what AI handled and where I made the call. Read the case study, or try it yourself.",
+  side: "My work spans apps, websites and AI products, from the first research call to a prototype you can tap through.",
+};
+
+// Design process, the way you actually work. Each step says what YOU do and where AI helps.
+export const processSteps = [
+  {
+    n: "01", title: "Listen & research",
+    body: "I talk to real users first: interviews, focus groups and surveys. Then I read every quote and find the patterns myself.",
+    me: "Run the sessions, read every quote, do the thematic analysis.",
+    ai: "Sorts raw notes into rough first groups so I start faster.",
+    tools: "Interviews, NVivo, FigJam, Claude",
+  },
+  {
+    n: "02", title: "Frame the problem",
+    body: "I pick the one problem worth solving and write down what we are not doing. Building with intent, not guesses.",
+    me: "Choose the problem, say no to the rest, agree it with the team.",
+    ai: "Lists edge cases I might miss: offline, empty, error, slow.",
+    tools: "FigJam, Pen + paper",
+  },
+  {
+    n: "03", title: "Design in Figma",
+    body: "Sketch on paper, then flows, then screens on a real design system, so it scales past the first version.",
+    me: "Decide the flow, cut what doesn't belong. One idea beats ten features.",
+    ai: "A few quick layout directions for me to react to and throw away.",
+    tools: "Pen + paper, Figma, Variables",
+  },
+  {
+    n: "04", title: "Vibe-code the MVP",
+    body: "Before any development, I turn the design into a working prototype people can actually tap through. E-Bot and Snap Budget on this page were made this way.",
+    me: "Write the spec and prompts, check every screen against the design.",
+    ai: "Turns my screens into working code in hours, not weeks.",
+    tools: "Figma Make, Claude, Lovable",
+  },
+  {
+    n: "05", title: "Test, hand off, ship",
+    body: "I test the MVP with real users, fix what they trip on, then hand off to engineers and review the build against the design.",
+    me: "Run usability tests, check accessibility by hand, sign off the build.",
+    ai: "First pass on copy and colour contrast before I check it.",
+    tools: "Usability tests, WCAG 2.1, HTML/CSS",
+  },
+];

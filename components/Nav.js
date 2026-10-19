@@ -5,10 +5,9 @@ import { motion } from "motion/react";
 import { site } from "@/data/content";
 
 const LINKS = [
-  ["about", "About"],
   ["work", "Work", true],
-  ["experience", "Experience"],
   ["process", "Process"],
+  ["beyond", "Beyond"],
   ["connect", "Connect"],
 ];
 

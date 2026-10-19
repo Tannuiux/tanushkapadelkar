@@ -1,33 +1,29 @@
 "use client";
-// The quote and your two-sides intro. Each word of the quote lights up as you scroll past it.
+// The lines under the hero. Each one fades and sharpens in as it reaches the middle of the screen,
+// then fades out again as you scroll past, so only one thought is in focus at a time.
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import Reveal from "@/components/Reveal";
 import { about } from "@/data/content";
 
-function Word({ children, progress, range }) {
-  const opacity = useTransform(progress, range, [0.18, 1]);
-  return <motion.span style={{ opacity }} className="qword">{children} </motion.span>;
+function Line({ children, className = "" }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const opacity = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [40, 0, 0, -40]);
+  const filter = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], ["blur(8px)", "blur(0px)", "blur(0px)", "blur(8px)"]);
+  return <motion.div ref={ref} className={`fline ${className}`} style={{ opacity, y, filter }}>{children}</motion.div>;
 }
 
 export default function About() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 45%"] });
-  const words = about.quote.split(" ");
   return (
-    <section className="blk about" id="about">
-      <div className="wrap">
-        <p className="bigquote" ref={ref}>
-          {words.map((w, i) => (
-            <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>{w}</Word>
-          ))}
-        </p>
-        <div className="about-cols">
-          {about.paras.map((p, i) => (
-            <Reveal key={i} delay={i * 0.12}><p>{p}</p></Reveal>
-          ))}
-        </div>
-      </div>
+    <section className="fade-story" id="about">
+      <Line className="fquote">
+        <p>{about.quote}</p>
+        <span>{about.quoteBy}</span>
+      </Line>
+      {about.paras.map((p, i) => (
+        <Line key={i}><p dangerouslySetInnerHTML={{ __html: p }} /></Line>
+      ))}
     </section>
   );
 }

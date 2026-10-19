@@ -2,24 +2,38 @@
 // Small live demos that sit on each project card, so people can try the idea, not just look at it.
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import EBotDemo from "@/components/EBotDemo";
 
-// Snap Budget: the real tap-through prototype, loaded only when someone asks for it.
-function SnapDemo() {
-  const [on, setOn] = useState(false);
+// A 3D phone that holds a real prototype. It sits angled, and straightens when you hover.
+function Phone({ src, still, alt, label, theme = "dark" }) {
+  const [on, setOn] = useState(!still);
   return (
-    <div className="demo-snap">
-      {on ? (
-        <iframe src="/prototype.html" title="Snap Budget prototype" loading="lazy" />
-      ) : (
-        <motion.button type="button" className="demo-start" onClick={() => setOn(true)} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-          <span className="demo-play">▶</span>
-          Tap to try the prototype
-          <small>Scan a receipt, check an item, see your month</small>
-        </motion.button>
-      )}
+    <div className="phone3d-wrap">
+      <motion.div className={`phone3d ${theme}`} initial={{ rotateY: -14, rotateX: 6 }} whileHover={{ rotateY: 0, rotateX: 0, y: -8 }} transition={{ type: "spring", stiffness: 120, damping: 16 }}>
+        <div className="phone3d-screen">
+          {on ? (
+            <iframe src={src} title={alt} loading="lazy" />
+          ) : (
+            <button type="button" className="snap-shot" onClick={() => setOn(true)} aria-label={`Open ${alt}`}>
+              <img src={still} alt={alt} />
+              <span className="snap-try">{label}</span>
+            </button>
+          )}
+        </div>
+        <span className="phone3d-side" aria-hidden="true" />
+      </motion.div>
+      <div className="phone3d-shadow" aria-hidden="true" />
     </div>
   );
+}
+
+// E-Bot: your real MVP from Figma Make, opened on the chat (message bar, chips and tutor handoff all work).
+function EBotPhone() {
+  return <Phone src="/ebot/index.html#chat" alt="E-Bot prototype" theme="light" />;
+}
+
+// Snap Budget: shows the item memory feature first. Tap to run the full prototype.
+function SnapDemo() {
+  return <Phone src="/snap/index.html" still="/img/snap-memory.webp" alt="Snap Budget prototype, Kitchen Roll bought twice at Dunnes Stores" label="Tap to try the prototype" />;
 }
 
 // e-Stream: flip a video between outside hosting and the in-house library, and toggle who can see it.
@@ -46,6 +60,14 @@ function StreamDemo() {
           </motion.b>
         </AnimatePresence>
       </div>
+      <AnimatePresence mode="wait">
+        <motion.ul key={String(inHouse)} className="ds-list" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+          {(inHouse
+            ? ["One library for every upload", "Access set per group, in one click", "Engagement dashboard on first login"]
+            : ["Files spread across several tools", "Access managed somewhere else", "No clear view of what learners watch"]
+          ).map((t) => <li key={t} className={inHouse ? "ok" : "no"}>{t}</li>)}
+        </motion.ul>
+      </AnimatePresence>
       <div className="ds-video">
         <div className="ds-thumb">▶</div>
         <div>
@@ -65,7 +87,7 @@ function StreamDemo() {
 }
 
 // Mental Health Tracker: the ten-second check-in. Each tap lands as a dot on the founder's trend line.
-const MOODS = [["Rough", 1], ["Low", 2], ["Okay", 3], ["Good", 4], ["Great", 5]];
+const MOODS = [["Rough", 1, "😫"], ["Low", 2, "😕"], ["Okay", 3, "😐"], ["Good", 4, "🙂"], ["Great", 5, "😄"]];
 function CheckinDemo() {
   const [log, setLog] = useState([3, 2, 4, 3]);
   const [last, setLast] = useState(null);
@@ -77,9 +99,9 @@ function CheckinDemo() {
       <div className="top"><span className="eyebrow">Try the check-in</span><span className="dm-time">Just after the game</span></div>
       <p className="dm-q">How do you feel right now?</p>
       <div className="dm-moods">
-        {MOODS.map(([label, v]) => (
+        {MOODS.map(([label, v, emo]) => (
           <motion.button key={label} type="button" onClick={() => tap(v)} whileTap={{ scale: 0.88 }} className={last === v ? "on" : ""}>
-            <i style={{ height: 10 + v * 6 }} />{label}
+            <motion.span className="emo" animate={last === v ? { scale: [1, 1.35, 1], rotate: [0, -10, 0] } : {}} transition={{ duration: 0.4 }}>{emo}</motion.span>{label}
           </motion.button>
         ))}
       </div>
@@ -98,7 +120,7 @@ function CheckinDemo() {
 }
 
 export default function Demo({ id }) {
-  if (id === "ebot") return <EBotDemo />;
+  if (id === "ebot") return <EBotPhone />;
   if (id === "snap") return <SnapDemo />;
   if (id === "stream") return <StreamDemo />;
   if (id === "mind") return <CheckinDemo />;

@@ -14,7 +14,7 @@ export default function Connect() {
   // Load Cal.com's popup only if you've set calLink in data/content.js.
   useEffect(() => {
     if (!site.calLink) return;
-    getCalApi().then((cal) => cal("ui", { theme: "light", styles: { branding: { brandColor: "#2F6BFF" } } }));
+    getCalApi().then((cal) => cal("ui", { theme: "light", styles: { branding: { brandColor: "#0E8C8A" } } }));
   }, []);
 
   const copy = () => {
