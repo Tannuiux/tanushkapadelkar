@@ -123,7 +123,7 @@ export const cases = [
     problem: "Working adults studied after 9pm, but tutors answered in the morning. A stuck learner had to wait a whole night.",
     noticed: "The answer didn't need to be perfect at 10pm. The handover did: the tutor should see the whole chat, so nobody explains twice.",
     built: "E-Bot answers first from the learner's course and module. When it can't help, it hands the whole conversation to a tutor, with dashboards so tutors know where to start.",
-    metric: ["55%", "fewer unanswered questions"],
+    metric: ["55%", "less student churn"],
     links: [],
     visual: "ebot",
   },
@@ -194,7 +194,7 @@ export const PRESETS = [
 // ---------- v7: from your Figma sketch ----------
 export const about = {
   quote: "AI won't replace you, but people who know how to build with it will.",
-  quoteBy: "IxDF",
+  quoteBy: "",
   // <b> words are highlighted on the page.
   paras: [
     "Yes, I use AI. Most teams do now, so I'd rather be open about it. It takes the busywork: sorting notes, drafting options, catching edge cases. <b>The research, the decisions and the details are mine.</b>",

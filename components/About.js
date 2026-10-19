@@ -18,8 +18,14 @@ export default function About() {
   return (
     <section className="fade-story" id="about">
       <Line className="fquote">
+        <div className="fq-pals" aria-hidden="true">
+          <motion.img src="/characters/me-wave.webp" alt="" className="fq-pal fq-me"
+            animate={{ y: [0, -10, 0], rotate: [0, -1.5, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.img src="/characters/mate-wave.webp" alt="" className="fq-pal fq-bot"
+            animate={{ y: [0, -16, 0], rotate: [0, 4, -3, 0] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} />
+        </div>
         <p>{about.quote}</p>
-        <span>{about.quoteBy}</span>
+        {about.quoteBy && <span>{about.quoteBy}</span>}
       </Line>
       {about.paras.map((p, i) => (
         <Line key={i}><p dangerouslySetInnerHTML={{ __html: p }} /></Line>

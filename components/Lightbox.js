@@ -7,7 +7,7 @@ export default function Lightbox() {
   const [img, setImg] = useState(null);
   useEffect(() => {
     const onClick = (e) => {
-      const t = e.target.closest("img.cs2-media, .cs2-phones img");
+      const t = e.target.closest("img.cs2-media, .cs2-phones img, img.cs3-media, .cs3-phones img");
       if (t) setImg({ src: t.currentSrc || t.src, alt: t.alt });
     };
     const onKey = (e) => e.key === "Escape" && setImg(null);
