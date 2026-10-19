@@ -1,17 +1,16 @@
 "use client";
-// Design process: big metallic step cards on a timeline (Divyansh's layout, your process).
-// The rail fills as you scroll, each card lifts in with depth, tilts toward the mouse,
-// and a light sheen runs across the metal. Every card says what I decide and where AI helps.
-import { useRef } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
+// Design process as a deck of big cards you swap through (same swap interaction as before),
+// with Divyansh-style content inside: number + title, a short line, tools, and who does what.
+// Swipe, use the arrows, press ← →, or click a side card to bring it to the front.
+import { useState } from "react";
+import { motion } from "motion/react";
 import Reveal from "@/components/Reveal";
-import Tilt from "@/components/Tilt";
 import { processSteps } from "@/data/content";
 
 export default function Process() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
-  const fill = useSpring(scrollYProgress, { stiffness: 90, damping: 20 });
+  const [i, setI] = useState(0);
+  const N = processSteps.length;
+  const go = (d) => setI((x) => Math.max(0, Math.min(N - 1, x + d)));
 
   return (
     <section className="blk proc" id="process">
@@ -19,32 +18,44 @@ export default function Process() {
         <Reveal>
           <p className="eyebrow">My design process</p>
           <h2 className="sec">How I go from <i>idea → MVP.</i></h2>
-          <p className="lead">Five steps. In each one you can see what I decide, and where AI helps me move faster.</p>
+          <p className="lead">Five steps. Each card shows what I decide, and where AI helps me move faster.</p>
         </Reveal>
 
-        <div className="proc-list" ref={ref}>
-          <div className="proc-rail" aria-hidden="true"><motion.span style={{ scaleY: fill }} /></div>
-          {processSteps.map((s, i) => (
-            <motion.div key={s.n} className="proc-row"
-              initial={{ opacity: 0, y: 60, rotateX: 14 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true, margin: "-12%" }} transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1] }}>
-              <motion.span className="proc-dot" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, margin: "-30%" }} transition={{ type: "spring", stiffness: 300, damping: 16 }} />
-              <Tilt max={4}>
-                <article className={`metal ${s.n === "04" ? "metal-hot" : ""}`}>
-                  <div className="metal-main">
-                    <h3><span className="metal-num">{s.n}</span>{s.title}</h3>
-                    <p className="metal-body">{s.body}</p>
-                    <p className="metal-tools">{s.tools}</p>
-                  </div>
-                  <div className="metal-split">
-                    <div className="who me"><span>My call</span><p>{s.me}</p></div>
-                    <div className="who ai"><span>AI helps</span><p>{s.ai}</p></div>
-                  </div>
-                  {s.n === "04" && <span className="metal-badge">This is how the demos above were made</span>}
-                </article>
-              </Tilt>
-            </motion.div>
-          ))}
+        <div className="deck2" tabIndex={0} aria-roledescription="carousel" aria-label="Design process steps"
+          onKeyDown={(e) => { if (e.key === "ArrowRight") go(1); if (e.key === "ArrowLeft") go(-1); }}>
+          {processSteps.map((s, k) => {
+            const off = k - i, abs = Math.abs(off);
+            return (
+              <motion.article key={s.n}
+                className={`pcard ${off === 0 ? "front" : ""} ${s.n === "04" ? "hot" : ""}`}
+                style={{ zIndex: 10 - abs }}
+                animate={{ x: `${off * 58}%`, scale: 1 - abs * 0.08, rotate: off * 2.5, opacity: abs > 2 ? 0 : 1 - abs * 0.25, filter: `blur(${abs > 0 ? 1.5 : 0}px)` }}
+                transition={{ type: "spring", stiffness: 210, damping: 26 }}
+                drag={off === 0 ? "x" : false} dragConstraints={{ left: 0, right: 0 }} dragElastic={0.35}
+                onDragEnd={(_, info) => { if (info.offset.x < -70) go(1); else if (info.offset.x > 70) go(-1); }}
+                onClick={() => off !== 0 && setI(k)}
+                whileHover={off === 0 ? { y: -6 } : {}}
+                aria-hidden={off !== 0}>
+                {s.n === "04" && <span className="pcard-badge">How the demos above were made</span>}
+                <h3><span className="pnum">{s.n}</span>{s.title}</h3>
+                <p className="pbody">{s.body}</p>
+                <div className="pwho">
+                  <div><span className="tag me">My call</span><p>{s.me}</p></div>
+                  <div><span className="tag ai">AI helps</span><p>{s.ai}</p></div>
+                </div>
+                <p className="ptools">{s.tools}</p>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        <div className="deck2-nav">
+          <motion.button type="button" onClick={() => go(-1)} disabled={i === 0} aria-label="Previous step" whileTap={{ scale: 0.9 }}>←</motion.button>
+          <div className="deck2-dots" aria-hidden="true">
+            {processSteps.map((s, k) => <button key={s.n} type="button" className={k === i ? "on" : ""} onClick={() => setI(k)} tabIndex={-1} />)}
+          </div>
+          <span className="deck2-count"><b>{processSteps[i].n}</b>/{String(N).padStart(2, "0")}</span>
+          <motion.button type="button" onClick={() => go(1)} disabled={i === N - 1} aria-label="Next step" whileTap={{ scale: 0.9 }}>→</motion.button>
         </div>
       </div>
     </section>

@@ -5,7 +5,7 @@ import PhotoHero from "@/components/PhotoHero";
 import About from "@/components/About";
 import WorkCards from "@/components/WorkCards";
 import Experience from "@/components/Experience";
-import ProcessFlip from "@/components/ProcessFlip";
+import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
 import Toolbox from "@/components/Toolbox";
 import Beyond from "@/components/Beyond";
@@ -19,7 +19,7 @@ export default function Home() {
       <About />
       <WorkCards />
       <Experience />
-      <ProcessFlip />
+      <Process />
       <Testimonials />
       <Toolbox />
       <Beyond />

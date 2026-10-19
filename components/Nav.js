@@ -59,7 +59,7 @@ export default function Nav() {
         animate={{ opacity: 1, x: "-50%", y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        OPEN TO PRODUCT DESIGNER ROLES
+        <span className="avail-dot">●</span> OPEN TO PRODUCT DESIGNER ROLES
       </motion.div>
     </>
   );

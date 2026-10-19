@@ -54,7 +54,7 @@ export const studies = {
       { t: "p", text: "Most learners ask questions on their phone, after work. The support flow was designed mobile first: large tap targets, a clear chat, and every status shown with an icon and text, never colour alone (WCAG 2.1 AA)." },
       { t: "h", text: "Impact: Fewer dead ends, on both sides" },
       { t: "p", text: "The redesigned portal made it easier for tutors to see the full context of each learner, respond to queries on time, and never miss a session, while students got clearer answers without the wait." },
-      { t: "stat", value: "55%", label: "E-Bot alone cut unanswered questions by 55%, taking first-line query handling off tutors so they could spend that time on students who actually needed a human." },
+      { t: "stat", value: "55%", label: "Student churn dropped by 55%. Learners got answers when they needed them, and E-Bot took first-line queries off tutors so they could spend that time on students who needed a human." },
       { t: "h", text: "What's next for E-Bot", small: true },
       { t: "p", text: "Ideas we're exploring next: a daily briefing, a study calendar that fits around work, and a clear view of progress toward the exam." },
       { t: "img", src: "/case/tutor/06_whats_next.webp", cap: "What's next" },

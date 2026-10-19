@@ -7,7 +7,6 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { siFigma, siNotion, siApple, siGsap, siClaude, siFramer } from "simple-icons";
 import { site, hero } from "@/data/content";
 import { useTwin } from "@/components/Twin";
-import Magnetic from "@/components/Magnetic";
 
 // [icon, left %, top %, rotation, size]: positions copied from your Figma frame.
 const LOGOS = [
@@ -69,24 +68,26 @@ export default function PhotoHero() {
       <div className="hero3-glow" aria-hidden="true" />
       <motion.p className="hero3-hello" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{hero.hello} <b>{site.name}</b>.</motion.p>
       <Polaroid />
-      <motion.h1 className="hero3-title" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, type: "spring", stiffness: 120, damping: 16 }}>
-        {hero.title.split(" ").map((w) => <motion.span key={w} whileHover={{ y: -6, color: "#0E8C8A" }}>{w}</motion.span>)}
+      <motion.h1 className="hero3-title" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7, ease: [0.65, 0, 0.35, 1] }}>
+        <span className="t-main">{hero.title}</span>
+        <span className="t-sub">who designs with AI and</span>
+        <span className="t-sub"><em>decides like a human.</em></span>
       </motion.h1>
-      <motion.p className="hero3-sub" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
-        I design with <b className="ai">AI</b> and decide like a <b className="human">human</b>. 4+ years turning messy ed-tech, fintech and travel problems into products people trust.
-      </motion.p>
       <motion.div className="hero3-ctas" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 }}>
-        <Magnetic><a className="pbtn" href="#work">view work <span>↓</span></a></Magnetic>
-        <Magnetic><a className="pbtn" href={site.resume} target="_blank" rel="noopener">resume <span>↗</span></a></Magnetic>
-        <Magnetic><a className="pbtn" href={site.linkedin} target="_blank" rel="noopener">linkedin <span>↗</span></a></Magnetic>
-        <Magnetic><a className="pbtn" href={`mailto:${site.email}`}>email <span>↗</span></a></Magnetic>
+        <a className="chip" href="#work">view work <span>↓</span></a>
+        <a className="chip" href={site.resume} target="_blank" rel="noopener">resume <span>↗</span></a>
+        <a className="chip" href={site.linkedin} target="_blank" rel="noopener">linkedin <span>↗</span></a>
+        <a className="chip" href={`mailto:${site.email}`}>email <span>↗</span></a>
       </motion.div>
-      <motion.button type="button" className="twin-bar" onClick={open} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-        <span className="twin-orb" aria-hidden="true" />
-        <span className="twin-label">Ask my AI twin</span>
-        <kbd>⌘K</kbd>
-      </motion.button>
-      <motion.p className="twin-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>Trained on my CV and case studies. It tells you it&apos;s AI.</motion.p>
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} className="twin-wrap">
+        <motion.button type="button" className="twin-bar" onClick={open} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <span className="twin-orb" aria-hidden="true" />
+          <span className="twin-sep" aria-hidden="true" />
+          <span className="twin-label">Ask my AI twin</span>
+          <kbd>⌘+K</kbd>
+        </motion.button>
+        <p className="twin-cap">Trained on my CV and case studies. It tells you it&apos;s AI.</p>
+      </motion.div>
     </header>
   );
 }

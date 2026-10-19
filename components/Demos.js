@@ -4,11 +4,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 // A 3D phone that holds a real prototype. It sits angled, and straightens when you hover.
-function Phone({ src, still, alt, label, theme = "dark" }) {
+export function Phone({ src, still, alt, label, theme = "dark", flat = false }) {
   const [on, setOn] = useState(!still);
   return (
     <div className="phone3d-wrap">
-      <motion.div className={`phone3d ${theme}`} initial={{ rotateY: -14, rotateX: 6 }} whileHover={{ rotateY: 0, rotateX: 0, y: -8 }} transition={{ type: "spring", stiffness: 120, damping: 16 }}>
+      <motion.div className={`phone3d ${theme}`} initial={flat ? { rotateY: -6, rotateX: 2 } : { rotateY: -14, rotateX: 6 }} whileHover={{ rotateY: 0, rotateX: 0, y: -8 }} transition={{ type: "spring", stiffness: 120, damping: 16 }}>
         <div className="phone3d-screen">
           {on ? (
             <iframe src={src} title={alt} loading="lazy" />

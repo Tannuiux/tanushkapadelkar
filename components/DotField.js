@@ -7,7 +7,7 @@ const GAP = 41;          // distance between dots, same rhythm as his grid
 const BASE = 1.5;        // resting dot radius
 const MAX = 5.5;         // radius right under the cursor
 const REACH = 150;       // how far the effect spreads (px)
-const ACCENT = [14, 140, 138]; // your teal
+const ACCENT = [42, 59, 255]; // ultramarine
 const GREY = [155, 155, 155];
 
 export default function DotField() {
