@@ -46,7 +46,14 @@ function Card({ c, i, total }) {
             </div>
             <Link className="wk-cta" href={`/work/${st.slug}`}>{x.cta || "Read the case study"} <span>→</span></Link>
           </div>
-          <div className="wk-demo"><Demo id={c.id} /></div>
+          <div className="wk-demo">
+            {x.try && (
+              <motion.p className="wk-try" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.6 }}>
+                <span className="wk-try-dot" aria-hidden="true" /><b>Try it</b> {x.try}
+              </motion.p>
+            )}
+            <Demo id={c.id} />
+          </div>
         </div>
         </Tilt>
       </motion.article>

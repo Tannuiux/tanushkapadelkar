@@ -1,17 +1,28 @@
 "use client";
 // Small live demos that sit on each project card, so people can try the idea, not just look at it.
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 // A 3D phone that holds a real prototype. It sits angled, and straightens when you hover.
 export function Phone({ src, still, alt, label, theme = "dark", flat = false }) {
   const [on, setOn] = useState(!still);
+  // The app inside is designed for a 390px-wide phone. Render it at that size and shrink it to fit the frame,
+  // so nothing gets cut off on the right however small the phone is drawn.
+  const screen = useRef(null);
+  const [box, setBox] = useState({ s: 1, h: 844 });
+  useEffect(() => {
+    const el = screen.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => { const s = e.contentRect.width / 390; setBox({ s, h: e.contentRect.height / s }); });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   return (
     <div className="phone3d-wrap">
       <motion.div className={`phone3d ${theme}`} initial={flat ? { rotateY: -6, rotateX: 2 } : { rotateY: -14, rotateX: 6 }} whileHover={{ rotateY: 0, rotateX: 0, y: -8 }} transition={{ type: "spring", stiffness: 120, damping: 16 }}>
-        <div className="phone3d-screen">
+        <div className="phone3d-screen" ref={screen}>
           {on ? (
-            <iframe src={src} title={alt} loading="lazy" />
+            <iframe src={src} title={alt} loading="lazy" className="phone3d-app" style={{ transform: `scale(${box.s})`, height: box.h }} />
           ) : (
             <button type="button" className="snap-shot" onClick={() => setOn(true)} aria-label={`Open ${alt}`}>
               <img src={still} alt={alt} />

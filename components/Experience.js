@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, animate, useInView, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 import Reveal from "@/components/Reveal";
 import Tilt from "@/components/Tilt";
-import { experience } from "@/data/content";
+import { experience, education } from "@/data/content";
 
 // Oldest first, laid end to end so the ruler reads as one career.
 const JOBS = [...experience].sort((a, b) => a.start - b.start);
@@ -23,6 +23,7 @@ export default function Experience() {
   const inView = useInView(box, { once: true, margin: "-20%" });
   const y = useMotionValue(0);
   const [shown, setShown] = useState(0);
+  const [touched, setTouched] = useState(false); // hide the hint once they've used the ruler
   const [w, setW] = useState(700);
   const PX = Math.max(56, Math.min(130, w / 6.5)); // pixels per year, smaller on phones
   const x = useTransform(y, (v) => w * MARK - v * PX);
@@ -38,7 +39,7 @@ export default function Experience() {
 
   // drag to scrub
   const drag = useRef(null);
-  const down = (e) => { drag.current = { x: e.clientX, y: y.get() }; e.currentTarget.setPointerCapture(e.pointerId); y.stop(); };
+  const down = (e) => { setTouched(true); drag.current = { x: e.clientX, y: y.get() }; e.currentTarget.setPointerCapture(e.pointerId); y.stop(); };
   const move = (e) => {
     if (!drag.current) return;
     const v = drag.current.y - (e.clientX - drag.current.x) / PX;
@@ -76,6 +77,16 @@ export default function Experience() {
                 {ticks}
               </motion.div>
               <span className="xp-mark" style={{ left: `${MARK * 100}%` }} />
+              <AnimatePresence>
+                {inView && !touched && (
+                  <motion.span className="xp-hint" aria-hidden="true"
+                    initial={{ opacity: 0, y: 8, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ delay: 4.4, type: "spring", stiffness: 260, damping: 20 }}>
+                    <motion.i animate={{ x: [0, -14, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 4.6 }}>👆</motion.i>
+                    Drag to scroll through my work experience
+                  </motion.span>
+                )}
+              </AnimatePresence>
               <div className="xp-fade l" /><div className="xp-fade r" />
             </div>
             <motion.button type="button" className="xp-replay" onClick={play} aria-label="Replay" whileHover={{ rotate: -180 }} whileTap={{ scale: 0.9 }}>↺</motion.button>
@@ -95,13 +106,40 @@ export default function Experience() {
 
             <div className="xp-steps" aria-hidden="true">
               {SEG.map((s) => (
-                <button key={s.company} type="button" className={s === job ? "on" : ""} onClick={() => animate(y, s.from + 0.05, { duration: 0.6, ease: [0.65, 0, 0.35, 1] })}>
+                <button key={s.company} type="button" className={s === job ? "on" : ""} onClick={() => { setTouched(true); animate(y, s.from + 0.05, { duration: 0.6, ease: [0.65, 0, 0.35, 1] }); }}>
                   {s.company}<span>{s.start}</span>
                 </button>
               ))}
             </div>
           </div>
         </Tilt>
+
+        {/* A few lines about the company the ruler is on. Changes as you scrub. */}
+        <div className="xp-about" aria-live="polite">
+          <AnimatePresence mode="wait">
+            <motion.div key={job.company} className="xp-about-in" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}>
+              <div className="xp-about-l">
+                <p className="xp-about-h"><b>{job.company}</b><span>{job.where}</span></p>
+                <p className="xp-about-p">{job.about}</p>
+                <p className="xp-about-w">{job.work}</p>
+                {job.link && <a className="xp-about-link" href={job.link} target="_blank" rel="noopener">Visit {job.company} ↗</a>}
+              </div>
+              <div className="xp-about-r">
+                <p className="eyebrow">What I learned</p>
+                <ul>{job.learned.map((t) => <li key={t}>{t}</li>)}</ul>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="xp-edu">
+          <p className="eyebrow">Education</p>
+          <ul>
+            {education.map((e) => (
+              <li key={e.degree}><b>{e.degree}</b><span>{e.school}{e.years ? ` · ${e.years}` : ""}</span></li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

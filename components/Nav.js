@@ -2,17 +2,20 @@
 // The floating pill nav. The green highlight slides between links as you scroll (Motion "layoutId").
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { usePathname } from "next/navigation";
 import { site } from "@/data/content";
 
 const LINKS = [
   ["work", "Work", true],
   ["process", "Process"],
   ["beyond", "Beyond"],
+  ["blog", "Blog", false, "/blog"],
   ["connect", "Connect"],
 ];
 
 export default function Nav() {
   const [active, setActive] = useState("");
+  const path = usePathname() || "/";
 
   useEffect(() => {
     // Watch each section; whichever crosses the middle of the screen becomes "active".
@@ -39,9 +42,9 @@ export default function Nav() {
         <div className="bar">
           <a className="mark" href="/#top">TP<span>.</span></a>
           <div className="links">
-            {LINKS.map(([id, label, keep]) => (
-              <a key={id} href={`/#${id}`} className={`${keep ? "keep " : ""}${active === id ? "on" : ""}`}>
-                {active === id && <motion.span layoutId="navpill" className="navpill" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
+            {LINKS.map(([id, label, keep, page]) => (
+              <a key={id} href={page || `/#${id}`} className={`${keep ? "keep " : ""}${(page ? path.startsWith(page) : active === id) ? "on" : ""}`}>
+                {(page ? path.startsWith(page) : active === id) && <motion.span layoutId="navpill" className="navpill" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
                 {label}
               </a>
             ))}
