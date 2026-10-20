@@ -44,6 +44,7 @@ export default async function Post({ params }) {
         </header>
         <div className="ar-col ar-cover"><Reveal className="cs3-herocard"><img className="cs3-media" src={p.cover} alt="" /></Reveal></div>
         <article className="ar-col ar-body">
+          <p className="wip"><span aria-hidden="true">✍️</span> This blog is a work in progress. I&apos;m still finishing these posts and adding photos, so check back soon.</p>
           {p.blocks.map((b, i) => <Block key={i} b={b} />)}
           <p className="ar-by">Written by Tanushka Padelkar</p>
           <Link href={`/blog/${next.slug}`} className="cs3-next"><span>Next post</span><b>{next.title} →</b></Link>

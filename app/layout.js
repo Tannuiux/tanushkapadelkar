@@ -17,9 +17,20 @@ import SmoothScroll from "@/components/SmoothScroll";
 import { TwinProvider } from "@/components/Twin";
 import "./globals.css";
 
+const DESC = "Product Designer in Dublin. I design with AI and decide like a human: case studies, live prototypes and my process.";
 export const metadata = {
-  title: "Tanushka Padelkar",
-  description: "Tanushka Padelkar, Product Designer in Dublin. AI is my mate; the judgement is mine.",
+  metadataBase: new URL("https://tanushkapadelkar.vercel.app"),
+  title: "Tanushka Padelkar · Product Designer",
+  description: DESC,
+  openGraph: {
+    title: "Tanushka Padelkar · Product Designer",
+    description: DESC,
+    url: "https://tanushkapadelkar.vercel.app",
+    siteName: "Tanushka Padelkar",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Tanushka Padelkar, Product Designer who designs with AI and decides like a human" }],
+    type: "website",
+  },
+  twitter: { card: "summary_large_image", title: "Tanushka Padelkar · Product Designer", description: DESC, images: ["/og.png"] },
 };
 
 export default function RootLayout({ children }) {

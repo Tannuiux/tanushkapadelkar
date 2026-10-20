@@ -22,6 +22,7 @@ export default function Blog() {
           </div>
         </header>
         <div className="cs3-wrap">
+          <p className="wip"><span aria-hidden="true">✍️</span> This blog is a work in progress. I&apos;m still finishing these posts and adding photos, so check back soon.</p>
           <div className="bl-grid">
             {list.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.06} className={i === 0 ? "bl-feat" : ""}>

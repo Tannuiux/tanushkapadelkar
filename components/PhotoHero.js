@@ -86,7 +86,7 @@ export default function PhotoHero() {
           <span className="twin-label">Ask my AI twin</span>
           <kbd>⌘+K</kbd>
         </motion.button>
-        <p className="twin-cap">Quick answers about my work, taken from my CV. It tells you it&apos;s AI.</p>
+        <p className="twin-cap">Answers from my CV and case studies. It tells you it&apos;s AI.</p>
       </motion.div>
     </header>
   );

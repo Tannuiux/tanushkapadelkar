@@ -67,7 +67,7 @@ function StreamDemo() {
         <div className="ds-bar"><motion.i animate={{ width: inHouse ? "13%" : "100%" }} transition={{ type: "spring", stiffness: 120, damping: 18 }} /></div>
         <AnimatePresence mode="wait">
           <motion.b key={String(inHouse)} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
-            {inHouse ? "−87%" : "Several subscriptions"}
+            {inHouse ? "No subscriptions" : "Several subscriptions"}
           </motion.b>
         </AnimatePresence>
       </div>

@@ -9,7 +9,7 @@ const TwinContext = createContext({ open: () => {} });
 export const useTwin = () => useContext(TwinContext);
 
 let uid = 0;
-const HELLO = { id: 0, cls: "bot", who: "MY AI MATE", text: "Hi, I'm Tanushka's AI mate. Ask me about her work, how she designs with AI, or whether she's available." };
+const HELLO = { id: 0, cls: "bot", who: "MY AI TWIN", text: "Hi, I'm Tanushka's AI twin. Ask me about her work, how she designs with AI, or whether she's available." };
 
 export function TwinProvider({ children }) {
   const dlg = useRef(null);
@@ -50,7 +50,7 @@ export function TwinProvider({ children }) {
   const history = () => msgs.filter((m) => m.id !== 0 && (m.cls === "bot" || m.cls === "learner"))
     .map((m) => ({ role: m.cls === "bot" ? "assistant" : "user", content: m.text }));
 
-  const askPreset = (question, answer) => { push("learner", "YOU", question); typeOut(push("bot", "MY AI MATE", ""), answer); };
+  const askPreset = (question, answer) => { push("learner", "YOU", question); typeOut(push("bot", "MY AI TWIN", ""), answer); };
 
   const askOwn = async (e) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ export function TwinProvider({ children }) {
     setQ(""); setBusy(true);
     const messages = [...history(), { role: "user", content: text }];
     push("learner", "YOU", text);
-    const id = push("bot", "MY AI MATE", "Thinking...");
+    const id = push("bot", "MY AI TWIN", "Thinking...");
     try {
       const r = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages }) });
       const d = await r.json();
@@ -73,10 +73,10 @@ export function TwinProvider({ children }) {
   return (
     <TwinContext.Provider value={{ open }}>
       {children}
-      <dialog ref={dlg} aria-label="Ask my AI mate" onClick={(e) => e.target === dlg.current && dlg.current.close()}>
+      <dialog ref={dlg} aria-label="Ask my AI twin" onClick={(e) => e.target === dlg.current && dlg.current.close()}>
         <div className="chat">
           <div className="dhead">
-            <span className="tag ai">My AI mate</span>
+            <span className="tag ai">My AI twin</span>
             <button className="x" type="button" aria-label="Close" onClick={() => dlg.current.close()}>×</button>
           </div>
           <div className="log" ref={log} aria-live="polite" data-lenis-prevent>
@@ -88,6 +88,7 @@ export function TwinProvider({ children }) {
               ))}
             </AnimatePresence>
           </div>
+          {!enabled && <p className="presets-h">Ask one of these</p>}
           <div className="presets">
             {PRESETS.map(([question, answer]) => (
               <button key={question} type="button" onClick={() => askPreset(question, answer)}>{question}</button>

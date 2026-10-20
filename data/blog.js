@@ -104,7 +104,6 @@ export const posts = [
         "Athul, The Problem Solver (Defensive Midfielder): a passion for design in healthcare, reliable and analytical, always ready to intercept challenges.",
         "Ann, The Provider (Winger): a technical background in business consultation and project management, bringing new perspectives and organising resources.",
       ] },
-      { t: "img", src: F("ifbB3rtw9KDq6EtUa6utMjCepbY.jpg"), cap: "Our team" },
       { t: "h", text: "Literature review & design process" },
       { t: "p", text: "It all started with an email from Prof. Kevin introducing us to Football Cooperative, a recreational football club using casual games to boost men's mental health. As a lifelong football fan and goalkeeper, I was instantly hooked by their mission and dove into their website, studies, and founder Steven O'Connell's vision. Our first team meeting set the stage: we presented partner intros, tackled an HCI literature review (10+ papers each), and delivered our Week 2 work together." },
       { t: "p", text: "Then came my favourite moment. As Prof. Kevin explained research methodology, I pictured our journey like a football match: teamwork, strategy, and execution toward victory. Our design process naturally mapped to Define, Empathise, Ideate, Prototype, Test & Deliver, just like passes building to a winning goal. I pitched this football-inspired flow to my teammates, and we shaped it together." },

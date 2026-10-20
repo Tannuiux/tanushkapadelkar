@@ -88,7 +88,7 @@ function Block({ b }) {
     case "video":
       return (
         <Reveal as="figure" className={`cs3-fig${wide}`}>
-          <Media src={b.src} poster={b.poster} alt={b.cap || ""} narrow={b.narrow} />
+          <Media src={b.src} poster={b.poster} alt={b.alt || b.cap || ""} narrow={b.narrow} />
           {b.cap && <figcaption>{b.cap}</figcaption>}
         </Reveal>
       );

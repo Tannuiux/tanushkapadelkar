@@ -43,10 +43,10 @@ export default function Connect() {
               <button className="btn cal" type="button" data-cal-link={site.calLink} data-cal-config='{"layout":"month_view"}'>Book a 30-min call</button>
             )}
             <a className="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
-            <button className="btn" type="button" onClick={open}>Ask my AI mate</button>
+            <button className="btn" type="button" onClick={open}>Ask my AI twin</button>
           </div>
         </Reveal>
-        <footer><span>© 2026 {site.name} · Dublin</span><span>Designed by me, built with my AI mate.</span></footer>
+        <footer><span>© 2026 {site.name} · Dublin</span><span>Designed by me, built with AI.</span></footer>
       </div>
     </section>
   );

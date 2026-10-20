@@ -16,6 +16,13 @@ const LINKS = [
 export default function Nav() {
   const [active, setActive] = useState("");
   const path = usePathname() || "/";
+  // The green "open to roles" pill only shows near the top, so it never sits on top of content.
+  const [top, setTop] = useState(true);
+  useEffect(() => {
+    const on = () => setTop(scrollY < 240);
+    on(); addEventListener("scroll", on, { passive: true });
+    return () => removeEventListener("scroll", on);
+  }, []);
 
   useEffect(() => {
     // Watch each section; whichever crosses the middle of the screen becomes "active".
@@ -59,8 +66,9 @@ export default function Nav() {
         className="avail"
         aria-hidden="true"
         initial={{ opacity: 0, x: "-50%", y: -8 }}
-        animate={{ opacity: 1, x: "-50%", y: 0 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
+        animate={top ? { opacity: 1, x: "-50%", y: 0 } : { opacity: 0, x: "-50%", y: -12 }}
+        transition={{ duration: 0.35 }}
+        style={{ pointerEvents: "none" }}
       >
         <span className="avail-dot">●</span> OPEN TO PRODUCT DESIGNER ROLES
       </motion.div>
